@@ -1,0 +1,27 @@
+html, body {
+    height: 100%;
+    width: 100%;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+  }
+  
+  #board > div {
+    background-color: beige;
+    height: 50px;
+    width: 50px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
