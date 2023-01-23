@@ -1,37 +1,91 @@
 // <-------------   Elements  --------------->
+let color = '';
+let color1 = 'red';
+let color2 = 'black';
+let width = '50px';
+let height = '50px';
+let rows = 8;
+let cols = 8;
+let body = document.querySelector('body');
+const board = document.getElementById('board')
 const player = {
-    id: 1
-    pieces: 12
-    
+    id: 1,
+    pieces: []
 }
-const 
-// board
-// reset button
+const piece = {
+    king: false,
+    height: '30px',
+    width: '30px',
+    borderRadius: '15px',
+    backgroundColor: 'green'
+}
+
 // <-------------   State  --------------->
-// number of pieces for each player
-let board;
 let winner;
 let turn;
 
-// turn
-// winner
-// current position
-// check move
 // <------------- Game Logic  --------------->
 
-// 1. Initialize game
-//       board setup (8 rows, 8 columns)
-//       2 players, 12 pieces each
-//       prompt user for move
-// 2. check if move is valid
-//       players can only move forward diagonally
-//       check jump function (nested if statement)
-//       king function
-//       win logic (last person standing)
+init()
+function init() {
+    checkerboard();
+    createPieces()
 
-// 3. icebox
-//       forfeit button
-//       track wins over multiple games
-//       "flip a coin" to pick who goes first
-//       timer
+}
+function createPieces() {
+    let idx = 1;
 
+    [...document.querySelectorAll('div')]
+   
+    // for (let i = 0; i < 3; i++) {
+    //     for (let j = 0; j < 4; j++) {
+    //         console.log(board)
+    //     }
+    // }
+}
+
+
+function square(row, width, height, color) {
+    let square = document.createElement('div');
+    square.style.width = width;
+    square.style.height = height;
+    square.style.margin = '1px';
+    square.style.backgroundColor = color;
+    row.append(square);
+}
+  
+function createRow(rowNumber) {
+    row = document.createElement('section');
+    body.append(row);
+    row.setAttribute('id', ('r' + rowNumber));
+    row.style.display = 'flex';
+    //console.log(row)
+    return row;
+}
+  
+
+
+function checkerboard() {
+    for (let i = 0; i < rows; i++) {
+      let row = createRow(String(i));
+      for (let j = 0; j < cols; j++) {
+        if (j % 2 == 0 && i % 2 == 0) {
+          color = color1
+        }
+        else {
+          color = color2;
+          //this[setAttribute('id', (`r${i}c${j}`))]
+          if (i % 2 !== 0 && j % 2 !== 0) {
+            color = color1
+          }
+        }
+        square(row, width, height, color);
+        }
+    }
+}
+  
+document.querySelector('div')[addEventListener('click', click)]
+  
+function click(event) {
+    console.log(event.target.tagName);
+}
