@@ -1,91 +1,71 @@
 // <-------------   Elements  --------------->
-let color = '';
-let color1 = 'red';
-let color2 = 'black';
-let width = '50px';
-let height = '50px';
-let rows = 8;
-let cols = 8;
-let body = document.querySelector('body');
-const board = document.getElementById('board')
-const player = {
+const boardEl = document.getElementById('board')
+const player1 = {
     id: 1,
-    pieces: []
+    color: 'red'
 }
-const piece = {
-    king: false,
-    height: '30px',
-    width: '30px',
-    borderRadius: '15px',
-    backgroundColor: 'green'
+const player2 = {
+    id: -1,
+    color: 'black'
 }
 
 // <-------------   State  --------------->
-let winner;
-let turn;
+let winner, turn = 1, board, row, col;
 
 // <------------- Game Logic  --------------->
 
 init()
+const validChoices = [...document.querySelectorAll('.valid')];
 function init() {
     checkerboard();
-    createPieces()
-
 }
-function createPieces() {
-    let idx = 1;
-
-    [...document.querySelectorAll('div')]
-   
-    // for (let i = 0; i < 3; i++) {
-    //     for (let j = 0; j < 4; j++) {
-    //         console.log(board)
-    //     }
-    // }
+function createPiece(idx, color) {
+    validChoices[idx].style.backgroundColor = color;
+    validChoices[idx].style.height = '30px';
+    validChoices[idx].style.width = '30px';
+    validChoices[idx].style.borderRadius = '15px';
+    validChoices[idx].style.margin = '10px auto'
 }
-
-
-function square(row, width, height, color) {
-    let square = document.createElement('div');
-    square.style.width = width;
-    square.style.height = height;
-    square.style.margin = '1px';
-    square.style.backgroundColor = color;
-    row.append(square);
-}
-  
-function createRow(rowNumber) {
-    row = document.createElement('section');
-    body.append(row);
-    row.setAttribute('id', ('r' + rowNumber));
-    row.style.display = 'flex';
-    //console.log(row)
-    return row;
-}
-  
-
 
 function checkerboard() {
-    for (let i = 0; i < rows; i++) {
-      let row = createRow(String(i));
-      for (let j = 0; j < cols; j++) {
-        if (j % 2 == 0 && i % 2 == 0) {
-          color = color1
-        }
-        else {
-          color = color2;
-          //this[setAttribute('id', (`r${i}c${j}`))]
-          if (i % 2 !== 0 && j % 2 !== 0) {
-            color = color1
-          }
-        }
-        square(row, width, height, color);
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            if ((j % 2 == 0 && i % 2 == 0) || (i % 2 !== 0 && j % 2 !== 0)) {
+                //creates divs to hold pieces
+                const currentSelection = document.getElementById(`r${i}c${j}`)
+                currentPiece = document.createElement('div')
+                currentPiece.setAttribute('class', 'valid')
+                currentSelection.style.backgroundColor = 'lightgrey';
+                currentSelection.appendChild(currentPiece)
+            }
         }
     }
 }
+//styles divs to populate board
+for (let i=0; i<12; i++) {
+    createPiece(i, player1.color)
+    createPiece((i+20), player2.color)
+}
   
-document.querySelector('div')[addEventListener('click', click)]
+document.querySelector('div')[addEventListener('click', checkMove)]
   
-function click(event) {
-    console.log(event.target.tagName);
+function checkMove(event) {
+    if (validChoices.includes(event.target) ) {
+        document.querySelector('div')[addEventListener('click', function(evt) {
+            const newSquare = evt.target.firstChild
+            if (turn === 1) {
+                newSquare.style.backgroundColor = player1.color;
+            } else  if (turn === -1) {
+                console.log('')
+                newSquare.style.backgroundColor = player2.color;
+            }
+            turn *= -1;
+            newSquare.style.height = '30px';
+            newSquare.style.width = '30px';
+            newSquare.style.borderRadius = '15px';
+            newSquare.style.margin = '10px auto'
+            event.target.removeAttribute('style')
+        })]
+    }
+    console.log(board)
 }
